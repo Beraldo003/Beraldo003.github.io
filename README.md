@@ -1,4 +1,4 @@
-# Beraldo Moussoungou
+# Beraldo MOUSSOUNGOU
 
 **Automatisme, robotique & IA** · Master 2 Automatique & Robotique (Mécatronique), Université Clermont Auvergne
 
