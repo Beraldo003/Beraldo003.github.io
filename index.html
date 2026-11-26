@@ -1,0 +1,425 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Beraldo Moussoungou · Automatisme, robotique & IA</title>
+<meta name="description" content="Portfolio de Beraldo Moussoungou, étudiant en Master 2 Automatique & Robotique (Mécatronique) à l'Université Clermont Auvergne. Recherche un stage de 6 mois dès février 2027.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:ital,wdth,wght@0,62..125,300..900;1,100,400&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --panel:#E4E9EE;      /* gris armoire électrique */
+    --paper:#F5F7F9;
+    --ink:#14233A;        /* bleu nuit, schéma */
+    --steel:#5E6B7C;
+    --rule:#C3CCD6;
+    --signal:#F2B705;     /* jaune sécurité : étape active */
+    --run:#2E7D5B;        /* vert « en marche » */
+    --measure: 68ch;
+  }
+  *{box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{
+    margin:0;background:var(--paper);color:var(--ink);
+    font-family:"Archivo",system-ui,sans-serif;font-size:1.0625rem;line-height:1.55;
+    font-variation-settings:"wdth" 100;
+    -webkit-font-smoothing:antialiased;
+  }
+  a{color:inherit}
+  a:focus-visible,button:focus-visible{outline:3px solid var(--signal);outline-offset:3px;border-radius:2px}
+  .wrap{max-width:1120px;margin:0 auto;padding:0 28px}
+
+  /* ---------- en-tête ---------- */
+  header.top{border-bottom:1px solid var(--rule);background:var(--paper);position:sticky;top:0;z-index:5}
+  header.top .wrap{display:flex;align-items:center;justify-content:space-between;height:60px;gap:16px}
+  .mark{font-weight:800;font-variation-settings:"wdth" 75;font-size:1.05rem;text-decoration:none;letter-spacing:.01em}
+  nav ul{display:flex;gap:22px;list-style:none;margin:0;padding:0}
+  nav a{text-decoration:none;color:var(--steel);font-size:.95rem}
+  nav a:hover{color:var(--ink)}
+  .btn{
+    display:inline-flex;align-items:center;gap:8px;text-decoration:none;font-weight:600;
+    padding:10px 16px;border:2px solid var(--ink);border-radius:3px;font-size:.95rem;
+  }
+  .btn.solid{background:var(--ink);color:var(--paper)}
+  .btn.solid:hover{background:#23385a}
+  .btn:not(.solid):hover{background:var(--panel)}
+
+  /* ---------- hero ---------- */
+  .hero{background:var(--panel);border-bottom:1px solid var(--rule)}
+  .hero .wrap{display:grid;grid-template-columns:minmax(0,1.1fr) minmax(0,1fr);gap:48px;padding-top:72px;padding-bottom:72px;align-items:center}
+  .hero h1{
+    margin:0 0 20px;font-weight:850;line-height:.92;
+    font-size:clamp(3rem,7.4vw,6.2rem);
+    font-variation-settings:"wdth" 62;letter-spacing:-.005em;
+  }
+  .hero h1 span{display:block;font-weight:300;font-variation-settings:"wdth" 125;font-size:.42em;letter-spacing:.01em;margin-top:.35em;color:var(--steel)}
+  .hero p.lead{font-size:1.25rem;max-width:34ch;margin:0 0 28px}
+  .status{display:inline-flex;align-items:center;gap:10px;font-weight:600;margin-bottom:22px;font-size:.98rem}
+  .status i{width:12px;height:12px;border-radius:50%;background:var(--run);box-shadow:0 0 0 4px rgba(46,125,91,.18)}
+  .actions{display:flex;flex-wrap:wrap;gap:12px}
+
+  /* GRAFCET */
+  .grafcet{width:100%;max-width:470px;justify-self:end;margin:0}
+  .grafcet svg{width:100%;height:auto;display:block;overflow:visible}
+  .grafcet figcaption{font-size:.85rem;color:var(--steel);margin-top:10px;max-width:46ch}
+  .g-line{stroke:var(--ink);stroke-width:2}
+  .g-step{fill:var(--paper);stroke:var(--ink);stroke-width:2}
+  .g-step.active{fill:var(--signal)}
+  .g-num{font-weight:800;font-size:17px;fill:var(--ink);text-anchor:middle;dominant-baseline:central;font-variation-settings:"wdth" 80}
+  .g-title{font-weight:700;font-size:17px;fill:var(--ink)}
+  .g-sub{font-size:14px;fill:var(--steel)}
+  .g-rec{font-size:13.5px;fill:var(--steel);font-style:italic}
+  .g-token{fill:var(--ink)}
+
+  /* ---------- sections ---------- */
+  section.block{padding:88px 0;border-bottom:1px solid var(--rule)}
+  .head{display:grid;grid-template-columns:260px 1fr;gap:40px;margin-bottom:44px}
+  .head h2{margin:0;font-size:2.4rem;line-height:1;font-weight:800;font-variation-settings:"wdth" 70}
+  .head p{margin:0;color:var(--steel);max-width:56ch;align-self:end}
+
+  /* projets */
+  .feature{
+    display:grid;grid-template-columns:1.1fr 1fr;gap:0;border:2px solid var(--ink);border-radius:4px;overflow:hidden;margin-bottom:28px;background:#fff;
+  }
+  .feature .txt{padding:36px}
+  .feature h3{font-size:1.9rem;line-height:1.05;margin:6px 0 14px;font-weight:800;font-variation-settings:"wdth" 78}
+  .feature .viz{background:var(--ink);position:relative;min-height:300px}
+  .feature .viz svg{position:absolute;inset:0;width:100%;height:100%}
+  .when{font-size:.9rem;color:var(--steel)}
+  .live{display:inline-block;background:var(--signal);color:var(--ink);font-weight:700;font-size:.8rem;padding:2px 8px;border-radius:2px;margin-left:8px;vertical-align:1px}
+  .tags{display:flex;flex-wrap:wrap;gap:6px;margin:16px 0 0;padding:0;list-style:none}
+  .tags li{font-size:.82rem;border:1px solid var(--rule);padding:3px 9px;border-radius:2px;background:var(--paper)}
+
+  .projects{list-style:none;margin:0;padding:0;border-top:2px solid var(--ink)}
+  .projects > li{display:grid;grid-template-columns:150px 1fr 1.15fr;gap:32px;padding:26px 0;border-bottom:1px solid var(--rule)}
+  .projects h3{margin:0;font-size:1.3rem;line-height:1.2;font-weight:750;font-variation-settings:"wdth" 85}
+  .projects .dom{font-size:.88rem;color:var(--run);font-weight:600;margin-top:6px}
+  .projects p{margin:0;max-width:var(--measure)}
+  .projects .tags{margin-top:12px}
+
+  /* parcours */
+  .timeline{list-style:none;margin:0;padding:0;position:relative}
+  .timeline::before{content:"";position:absolute;left:150px;top:6px;bottom:6px;width:2px;background:var(--ink)}
+  .timeline li{display:grid;grid-template-columns:150px 1fr;gap:40px;padding:0 0 34px;position:relative}
+  .timeline li::after{content:"";position:absolute;left:144px;top:6px;width:14px;height:14px;background:var(--paper);border:2px solid var(--ink)}
+  .timeline li.edu::after{border-radius:50%}
+  .timeline .d{font-size:.92rem;color:var(--steel);text-align:right;padding-right:22px}
+  .timeline h3{margin:0;font-size:1.15rem;font-weight:700}
+  .timeline .org{color:var(--steel);font-size:.95rem;margin:2px 0 6px}
+  .timeline p{margin:0;max-width:var(--measure)}
+  .legend{display:flex;gap:22px;font-size:.88rem;color:var(--steel);margin:-20px 0 32px 190px}
+  .legend span{display:inline-flex;align-items:center;gap:8px}
+  .legend b{width:12px;height:12px;border:2px solid var(--ink);display:inline-block}
+  .legend b.r{border-radius:50%}
+
+  /* compétences */
+  .skills{display:grid;grid-template-columns:repeat(3,1fr);gap:0;border-top:2px solid var(--ink)}
+  .skills div{padding:24px 24px 26px 0;border-bottom:1px solid var(--rule)}
+  .skills h3{margin:0 0 8px;font-size:1.05rem;font-weight:700}
+  .skills p{margin:0;color:var(--steel);font-size:.98rem}
+
+  /* contact */
+  .contact{background:var(--ink);color:var(--paper);padding:96px 0}
+  .contact h2{margin:0 0 14px;font-size:clamp(2.4rem,5.5vw,4.4rem);line-height:.95;font-weight:850;font-variation-settings:"wdth" 64}
+  .contact p{max-width:52ch;color:#B9C4D2;font-size:1.15rem;margin:0 0 30px}
+  .contact .btn{border-color:var(--paper)}
+  .contact .btn.solid{background:var(--signal);border-color:var(--signal);color:var(--ink)}
+  .contact .btn.solid:hover{background:#ffcb2e}
+  .contact .btn:not(.solid):hover{background:#23385a}
+  .contact dl{display:grid;grid-template-columns:auto 1fr;gap:6px 24px;margin:44px 0 0;font-size:.98rem;color:#B9C4D2}
+  .contact dt{color:var(--paper);font-weight:600}
+  .contact dd{margin:0}
+  footer{background:var(--ink);color:#8796AA;font-size:.85rem;border-top:1px solid #2a3d5c}
+  footer .wrap{padding-top:20px;padding-bottom:24px}
+
+  /* ---------- responsive ---------- */
+  @media (max-width: 900px){
+    nav{display:none}
+    .hero .wrap{grid-template-columns:1fr;padding-top:48px;padding-bottom:48px}
+    .grafcet{justify-self:start}
+    .head{grid-template-columns:1fr;gap:12px}
+    .feature{grid-template-columns:1fr}
+    .feature .viz{min-height:220px}
+    .projects > li{grid-template-columns:1fr;gap:8px}
+    .skills{grid-template-columns:1fr 1fr}
+    .timeline::before{left:6px}
+    .timeline li{grid-template-columns:1fr;gap:4px;padding-left:34px}
+    .timeline li::after{left:0}
+    .timeline .d{text-align:left}
+    .legend{margin-left:0}
+  }
+  @media (max-width: 560px){
+    .wrap{padding:0 20px}
+    .skills{grid-template-columns:1fr}
+    .feature .txt{padding:26px}
+    section.block{padding:64px 0}
+  }
+
+  /* animation unique : le jeton GRAFCET parcourt les étapes au chargement */
+  @media (prefers-reduced-motion: no-preference){
+    .g-token{animation:travel 2.6s cubic-bezier(.65,0,.35,1) .4s both}
+    .g-step.active{animation:arrive .5s ease-out 2.95s both}
+    @keyframes travel{
+      0%{transform:translateY(-360px)}
+      18%,22%{transform:translateY(-270px)}
+      40%,44%{transform:translateY(-180px)}
+      62%,66%{transform:translateY(-90px)}
+      100%{transform:translateY(0)}
+    }
+    @keyframes arrive{from{fill:var(--paper)}to{fill:var(--signal)}}
+  }
+</style>
+</head>
+<body>
+
+<header class="top">
+  <div class="wrap">
+    <a class="mark" href="#">B. Moussoungou</a>
+    <nav aria-label="Sections">
+      <ul>
+        <li><a href="#projets">Projets</a></li>
+        <li><a href="#parcours">Parcours</a></li>
+        <li><a href="#competences">Compétences</a></li>
+        <li><a href="#contact">Contact</a></li>
+      </ul>
+    </nav>
+    <a class="btn" href="cv.pdf" download>Télécharger le CV</a>
+  </div>
+</header>
+
+<main>
+<section class="hero">
+  <div class="wrap">
+    <div>
+      <div class="status"><i aria-hidden="true"></i>Disponible pour un stage de 6 mois dès février 2027</div>
+      <h1>Beraldo Moussoungou<span>Automatisme, robotique &amp; IA</span></h1>
+      <p class="lead">Étudiant en Master 2 Automatique &amp; Robotique (Mécatronique) à l'Université Clermont Auvergne. Je programme des automates Siemens, des robots FANUC et des modèles de vision qui les font travailler ensemble.</p>
+      <div class="actions">
+        <a class="btn solid" href="#projets">Voir les projets</a>
+        <a class="btn" href="mailto:moussoungouwelcome03@gmail.com">M'écrire</a>
+      </div>
+    </div>
+
+    <figure class="grafcet" aria-labelledby="gcap">
+      <svg viewBox="0 0 440 432" role="img" aria-label="Parcours sous forme de GRAFCET : ingénieur ENSP, licence EEA, projets, Master 2, puis stage à partir de février 2027.">
+        <!-- liaison verticale -->
+        <line class="g-line" x1="42" y1="22" x2="42" y2="408"/>
+        <!-- transitions -->
+        <g class="g-line">
+          <line x1="28" y1="87" x2="56" y2="87"/>
+          <line x1="28" y1="177" x2="56" y2="177"/>
+          <line x1="28" y1="267" x2="56" y2="267"/>
+          <line x1="28" y1="357" x2="56" y2="357"/>
+        </g>
+        <text class="g-rec" x="70" y="91">diplôme d'ingénieur obtenu</text>
+        <text class="g-rec" x="70" y="181">licence validée</text>
+        <text class="g-rec" x="70" y="271">admission en M2</text>
+        <text class="g-rec" x="70" y="361">février 2027</text>
+
+        <!-- étape initiale (double carré) -->
+        <rect class="g-step" x="20" y="20" width="44" height="44"/>
+        <rect x="25" y="25" width="34" height="34" fill="none" stroke="#14233A" stroke-width="2"/>
+        <text class="g-num" x="42" y="38">0</text>
+        <text class="g-title" x="84" y="38">Ingénieur électromécanique</text>
+        <text class="g-sub" x="84" y="57">ENSP, Congo · 2020–2023</text>
+
+        <rect class="g-step" x="20" y="110" width="44" height="44"/>
+        <text class="g-num" x="42" y="128">1</text>
+        <text class="g-title" x="84" y="128">Licence EEA</text>
+        <text class="g-sub" x="84" y="147">Université Clermont Auvergne · 2023–2024</text>
+
+        <rect class="g-step" x="20" y="200" width="44" height="44"/>
+        <text class="g-num" x="42" y="218">2</text>
+        <text class="g-title" x="84" y="218">ROS2, S7-1500, YOLOv8, FANUC</text>
+        <text class="g-sub" x="84" y="237">Projets et stage à l'Institut Pascal · 2024–2026</text>
+
+        <rect class="g-step" x="20" y="290" width="44" height="44"/>
+        <text class="g-num" x="42" y="308">3</text>
+        <text class="g-title" x="84" y="308">Master 2 Mécatronique</text>
+        <text class="g-sub" x="84" y="327">Université Clermont Auvergne · depuis 2026</text>
+
+        <rect class="g-step active" x="20" y="380" width="44" height="44"/>
+        <text class="g-num" x="42" y="398">4</text>
+        <text class="g-title" x="84" y="398">Stage de fin d'études</text>
+        <text class="g-sub" x="84" y="417">Robotique, automatisme ou IA · 6 mois</text>
+
+        <!-- jeton : l'étape active -->
+        <circle class="g-token" cx="42" cy="415" r="3.5"/>
+      </svg>
+      <figcaption id="gcap">Mon parcours en GRAFCET. L'étape 4 est l'étape active : c'est là que vous intervenez.</figcaption>
+    </figure>
+  </div>
+</section>
+
+<section class="block" id="projets">
+  <div class="wrap">
+    <div class="head">
+      <h2>Projets</h2>
+      <p>Du capteur jusqu'à la supervision : calibration, programmation automate et robot, vision par ordinateur et communication industrielle.</p>
+    </div>
+
+    <article class="feature">
+      <div class="txt">
+        <span class="when">Depuis septembre 2026</span><span class="live">En cours</span>
+        <h3>Système de scan 3D robotisé</h3>
+        <p>Un robot balaie une pièce avec une ligne laser verte filmée par une caméra industrielle Basler. J'ai développé la calibration caméra, robot-caméra et plan laser, puis la détection subpixel de la ligne laser en Python pour reconstruire la pièce en nuage de points.</p>
+        <ul class="tags"><li>Python</li><li>OpenCV</li><li>Caméra Basler</li><li>Calibration hand-eye</li><li>Reconstruction 3D</li></ul>
+        <!-- Quand le dépôt sera en ligne : <p><a class="btn" href="https://github.com/Beraldo003/scan-3d-robotise">Voir le code</a></p> -->
+      </div>
+      <div class="viz" aria-hidden="true">
+        <svg viewBox="0 0 400 300" preserveAspectRatio="xMidYMid slice">
+          <defs>
+            <linearGradient id="beam" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="0" stop-color="#5BE38A" stop-opacity=".0"/>
+              <stop offset="1" stop-color="#5BE38A" stop-opacity=".45"/>
+            </linearGradient>
+          </defs>
+          <!-- quadrillage -->
+          <g stroke="#2a3d5c" stroke-width="1">
+            <path d="M0 60H400M0 120H400M0 180H400M0 240H400M80 0V300M160 0V300M240 0V300M320 0V300"/>
+          </g>
+          <!-- faisceau laser -->
+          <polygon points="200,20 70,205 330,205" fill="url(#beam)"/>
+          <circle cx="200" cy="20" r="6" fill="#5BE38A"/>
+          <!-- profil de la pièce vu par la caméra -->
+          <path d="M40 230 L110 230 L130 205 L175 205 Q200 168 225 205 L270 205 L290 230 L360 230" fill="none" stroke="#5BE38A" stroke-width="3" stroke-linejoin="round"/>
+          <!-- points du nuage -->
+          <g fill="#F5F7F9" opacity=".75">
+            <circle cx="60" cy="255" r="1.6"/><circle cx="80" cy="255" r="1.6"/><circle cx="100" cy="255" r="1.6"/><circle cx="122" cy="245" r="1.6"/><circle cx="142" cy="232" r="1.6"/><circle cx="162" cy="232" r="1.6"/><circle cx="185" cy="214" r="1.6"/><circle cx="200" cy="208" r="1.6"/><circle cx="215" cy="214" r="1.6"/><circle cx="238" cy="232" r="1.6"/><circle cx="258" cy="232" r="1.6"/><circle cx="280" cy="245" r="1.6"/><circle cx="300" cy="255" r="1.6"/><circle cx="320" cy="255" r="1.6"/><circle cx="340" cy="255" r="1.6"/>
+            <circle cx="60" cy="275" r="1.6"/><circle cx="80" cy="275" r="1.6"/><circle cx="100" cy="275" r="1.6"/><circle cx="122" cy="265" r="1.6"/><circle cx="142" cy="252" r="1.6"/><circle cx="162" cy="252" r="1.6"/><circle cx="185" cy="234" r="1.6"/><circle cx="200" cy="228" r="1.6"/><circle cx="215" cy="234" r="1.6"/><circle cx="238" cy="252" r="1.6"/><circle cx="258" cy="252" r="1.6"/><circle cx="280" cy="265" r="1.6"/><circle cx="300" cy="275" r="1.6"/><circle cx="320" cy="275" r="1.6"/><circle cx="340" cy="275" r="1.6"/>
+          </g>
+        </svg>
+      </div>
+    </article>
+
+    <ul class="projects">
+      <li>
+        <span class="when">Avr. – mai 2026</span>
+        <div><h3>Cellule de palettisation robotisée</h3><div class="dom">Robotique · FANUC</div></div>
+        <div>
+          <p>Cellule simulée sous FANUC ROBOGUIDE : programmation TP, gestion des entrées/sorties, définition des User et Tool Frames, palettisation multicouche et robot monté sur axe linéaire.</p>
+          <ul class="tags"><li>FANUC ROBOGUIDE</li><li>Langage TP</li><li>Palettisation</li><li>Axe linéaire</li></ul>
+        </div>
+      </li>
+      <li>
+        <span class="when">En cours</span>
+        <div><h3>Rayonnage haut automatisé</h3><div class="dom">Embarqué · Raspberry Pi</div></div>
+        <div>
+          <p>Magasin automatisé 24 V (maquette Fischertechnik) : je développe la partie commande et communication sur Raspberry Pi.</p>
+          <ul class="tags"><li>Raspberry Pi</li><li>Python</li><li>Entrées/sorties 24 V</li></ul>
+        </div>
+      </li>
+      <li>
+        <span class="when">Mars – mai 2025</span>
+        <div><h3>Ligne de production intelligente</h3><div class="dom">Automatisme · Siemens</div></div>
+        <div>
+          <p>Automatisation et supervision d'une ligne de production et d'un convoyeur : programme S7-1500, réseau Profinet, échanges Modbus TCP et MQTT, tableau de bord Node-RED et IHM/SCADA.</p>
+          <ul class="tags"><li>TIA Portal</li><li>S7-1500</li><li>Profinet</li><li>Modbus TCP</li><li>MQTT</li><li>Node-RED</li><li>WinCC</li></ul>
+        </div>
+      </li>
+      <li>
+        <span class="when">Févr. – mars 2025</span>
+        <div><h3>Supervision IoT par caméra industrielle</h3><div class="dom">IoT · Vision</div></div>
+        <div>
+          <p>Affichage en temps réel des images d'une caméra de vision industrielle : transfert FTP, traitement sur Raspberry Pi, diffusion MQTT et interface Node-RED.</p>
+          <ul class="tags"><li>Raspberry Pi</li><li>FTP</li><li>MQTT</li><li>Node-RED</li></ul>
+        </div>
+      </li>
+      <li>
+        <span class="when">Oct. – déc. 2024</span>
+        <div><h3>Robot mobile sous ROS2</h3><div class="dom">Robotique mobile</div></div>
+        <div>
+          <p>Architecture de contrôle en Python pour piloter un robot mobile en mode manuel (joystick) et autonome, avec Lidar et couche de sécurité anti-collision.</p>
+          <ul class="tags"><li>ROS2</li><li>Python</li><li>Lidar</li><li>Linux</li></ul>
+        </div>
+      </li>
+    </ul>
+  </div>
+</section>
+
+<section class="block" id="parcours">
+  <div class="wrap">
+    <div class="head">
+      <h2>Parcours</h2>
+      <p>Une formation d'électromécanicien au Congo, puis une spécialisation en automatique et robotique en France, avec un pied sur le terrain à chaque étape.</p>
+    </div>
+    <div class="legend" aria-hidden="true"><span><b></b>Expérience</span><span><b class="r"></b>Formation</span></div>
+    <ul class="timeline">
+      <li class="edu">
+        <span class="d">Depuis sept. 2026</span>
+        <div><h3>Master 2 Automatique &amp; Robotique, spécialité Mécatronique</h3><div class="org">Université Clermont Auvergne, France</div>
+        <p>Perception et intelligence artificielle, automatisme, robotique, systèmes embarqués et communication, mécanique.</p></div>
+      </li>
+      <li>
+        <span class="d">Juin – août 2025</span>
+        <div><h3>Stage : détection d'objets assistée par IA</h3><div class="org">Institut Pascal, Université Clermont Auvergne</div>
+        <p>Analyse du jeu de données et des embeddings, entraînement et optimisation d'un modèle YOLOv8 (Ultralytics), puis déploiement d'un pipeline d'inférence complet.</p></div>
+      </li>
+      <li class="edu">
+        <span class="d">Sept. 2023 – mai 2024</span>
+        <div><h3>Licence Électronique, Électrotechnique et Automatique</h3><div class="org">Université Clermont Auvergne, France</div>
+        <p>Systèmes électriques, traitement du signal, instrumentation, commande et régulation industrielles. Habilitation électrique BR.</p></div>
+      </li>
+      <li>
+        <span class="d">Avr. – sept. 2023</span>
+        <div><h3>Stage en mécanique industrielle</h3><div class="org">SARIS Congo</div>
+        <p>Maintenance préventive et corrective d'équipements mécaniques avec diagnostic avancé, lecture de plans et usinage de pièces.</p></div>
+      </li>
+      <li class="edu">
+        <span class="d">Oct. 2020 – juil. 2023</span>
+        <div><h3>Ingénieur en électromécanique</h3><div class="org">École Nationale Supérieure Polytechnique (ENSP), République du Congo</div>
+        <p>Génie électrique, génie mécanique et maintenance, automatique.</p></div>
+      </li>
+      <li>
+        <span class="d">Avr. – août 2022</span>
+        <div><h3>Stage de technicien en électrotechnique</h3><div class="org">SARIS Congo</div>
+        <p>Installation, câblage, mise en service et maintenance d'équipements électriques industriels ; dépannage dans le respect des normes de sécurité.</p></div>
+      </li>
+    </ul>
+  </div>
+</section>
+
+<section class="block" id="competences">
+  <div class="wrap">
+    <div class="head">
+      <h2>Compétences</h2>
+      <p>Les outils que j'ai utilisés en projet ou en stage.</p>
+    </div>
+    <div class="skills">
+      <div><h3>Automatisme et PLC</h3><p>TIA Portal, Siemens S7-1500, WinCC, Schneider Electric Control Expert, Rockwell, Ladder, SCL, GRAFCET</p></div>
+      <div><h3>Robotique</h3><p>FANUC ROBOGUIDE, ABB RobotStudio, RoboDK, ROS2, Lidar</p></div>
+      <div><h3>IA et vision</h3><p>YOLOv8 (Ultralytics), PyTorch, OpenCV, caméras industrielles Basler</p></div>
+      <div><h3>Embarqué et IoT</h3><p>Raspberry Pi, Arduino, MQTT, Node-RED, Profinet, Modbus TCP, Proteus, Altium</p></div>
+      <div><h3>Programmation</h3><p>Python, C/C++, MATLAB/Simulink, LabVIEW, Streamlit, Docker, Linux, Git</p></div>
+      <div><h3>CAO et simulation</h3><p>CATIA V5, SolidWorks, Fusion 360, PTC Creo, Siemens NX, AutoCAD</p></div>
+      <div><h3>Langues</h3><p>Français (langue maternelle), anglais (B1)</p></div>
+      <div><h3>Habilitation</h3><p>Habilitation électrique BR</p></div>
+      <div><h3>En dehors du labo</h3><p>Football</p></div>
+    </div>
+  </div>
+</section>
+</main>
+
+<section class="contact" id="contact">
+  <div class="wrap">
+    <h2>Un stage en robotique, automatisme ou IA&nbsp;?</h2>
+    <p>Je cherche un stage de fin d'études de 6 mois à partir de février 2027, partout en France. Écrivez-moi, je réponds rapidement.</p>
+    <div class="actions">
+      <a class="btn solid" href="mailto:moussoungouwelcome03@gmail.com">M'écrire</a>
+      <a class="btn" href="cv.pdf" download>Télécharger le CV</a>
+    </div>
+    <dl>
+      <dt>E-mail</dt><dd><a href="mailto:moussoungouwelcome03@gmail.com">moussoungouwelcome03@gmail.com</a></dd>
+      <dt>GitHub</dt><dd><a href="https://github.com/Beraldo003">github.com/Beraldo003</a></dd>
+      <!-- Ajoute ton LinkedIn ici :
+      <dt>LinkedIn</dt><dd><a href="https://www.linkedin.com/in/TON-PROFIL">linkedin.com/in/TON-PROFIL</a></dd> -->
+      <dt>Mobilité</dt><dd>Toute la France</dd>
+    </dl>
+  </div>
+</section>
+<footer><div class="wrap">© 2026 Beraldo Moussoungou</div></footer>
+
+</body>
+</html>
